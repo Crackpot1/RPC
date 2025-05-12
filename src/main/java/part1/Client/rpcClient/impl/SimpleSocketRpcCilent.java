@@ -1,7 +1,6 @@
-package part1.Client;
+package part1.Client.rpcClient.impl;
 
-
-
+import part1.Client.rpcClient.RpcClient;
 import part1.common.Message.RpcRequest;
 import part1.common.Message.RpcResponse;
 
@@ -13,11 +12,17 @@ import java.net.Socket;
 /**
  * @author wxx
  * @version 1.0
- * @create 2024/2/4 18:31
+ * @create 2024/5/2 18:58
  */
-public class IOClient {
-    //这里负责底层与服务端的通信，发送request，返回response
-    public static RpcResponse sendRequest(String host, int port, RpcRequest request){
+public class SimpleSocketRpcCilent implements RpcClient {
+    private String host;
+    private int port;
+    public SimpleSocketRpcCilent(String host,int port){
+        this.host=host;
+        this.port=port;
+    }
+    @Override
+    public RpcResponse sendRequest(RpcRequest request) {
         try {
             Socket socket=new Socket(host, port);
             ObjectOutputStream oos=new ObjectOutputStream(socket.getOutputStream());
